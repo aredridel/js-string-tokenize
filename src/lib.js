@@ -1,6 +1,4 @@
 // @flow
-require('source-map-support').install();
-
 'use strict';
 
 // The rationale behind using this idiom is described in:
