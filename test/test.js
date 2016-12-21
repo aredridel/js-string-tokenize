@@ -90,7 +90,7 @@ describe('tokenize', function() {
         it('case 1b', function() {
             const searchPatterns = [ ['a', 'b'], ['b', 'a'], ['x', 'xx', 'a', 'xxx', 'b'] ];
             for (let i = 0 ; i < searchPatterns.length ; i++) {
-                const tokens: Array<TokenT> = tokenizeN('aba', searchPatterns[i], true);
+                const tokens: Array<TokenT> = tokenizeN('aba', searchPatterns[i], true, true);
                 assert.strictEqual(JSON.stringify(tokens), '[{"v":"aba","isDelim":true}]');
             }
         });                
@@ -104,7 +104,7 @@ describe('tokenize', function() {
         it('case 2b', function() {
             const searchPatterns = [ ['a', 'b'], ['b', 'a'], ['x', 'xx', 'a', 'xxx', 'b'] ];
             for (let i = 0 ; i < searchPatterns.length ; i++) {
-                const tokens: Array<TokenT> = tokenizeN('abccda', searchPatterns[i], true);
+                const tokens: Array<TokenT> = tokenizeN('abccda', searchPatterns[i], true, true);
                 assert.strictEqual(JSON.stringify(tokens), '[{"v":"ab","isDelim":true},{"v":"ccd","isDelim":false},{"v":"a","isDelim":true}]');
             }
         });                
@@ -118,7 +118,7 @@ describe('tokenize', function() {
         it('case 3b', function() {
             const searchPatterns = [ ['a', 'b'], ['b', 'a'], ['x', 'xx', 'a', 'xxx', 'b'] ];
             for (let i = 0 ; i < searchPatterns.length ; i++) {
-                const tokens: Array<TokenT> = tokenizeN(' f f abccda g', searchPatterns[i], true);
+                const tokens: Array<TokenT> = tokenizeN(' f f abccda g', searchPatterns[i], true, true);
                 assert.strictEqual(JSON.stringify(tokens), '[{"v":" f f ","isDelim":false},{"v":"ab","isDelim":true},{"v":"ccd","isDelim":false},{"v":"a","isDelim":true},{"v":" g","isDelim":false}]');
             }
         });
@@ -132,7 +132,7 @@ describe('tokenize', function() {
         it('case 4b', function() {
             const searchPatterns = [ ['a', 'ba'], ['ba', 'a'], ['y', 'yy', 'ba', 'yyy', 'a'] ];
             for (let i = 0 ; i < searchPatterns.length ; i++) {
-                const tokens: Array<TokenT> = tokenizeN('xxbaxx', searchPatterns[i], true);
+                const tokens: Array<TokenT> = tokenizeN('xxbaxx', searchPatterns[i], true, true);
                 assert.strictEqual(JSON.stringify(tokens), '[{"v":"xx","isDelim":false},{"v":"ba","isDelim":true},{"v":"xx","isDelim":false}]');
             }
         });                
@@ -147,7 +147,7 @@ describe('tokenize', function() {
             const searchPatterns = [ ['a', 'ba'], ['ba', 'a'], ['y', 'yy', 'ba', 'yyy', 'a'] ];
             for (let i = 0 ; i < searchPatterns.length ; i++) {
                 const INPUT = 'xxbaabaxx';
-                const tokens: Array<TokenT> = tokenizeN(INPUT, searchPatterns[i], true);
+                const tokens: Array<TokenT> = tokenizeN(INPUT, searchPatterns[i], true, true);
                 assert.strictEqual(JSON.stringify(tokens), '[{"v":"xx","isDelim":false},{"v":"baaba","isDelim":true},{"v":"xx","isDelim":false}]');
                 {
                     const nonDelimTokensV = nonDelimTokens(INPUT, ['b']);

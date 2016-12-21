@@ -29,7 +29,7 @@ function sortByLength(ss: Array<string>): Array<string> {
     return ss.slice().sort( (a,b)=>a.length-b.length );
 }
 
-function tokenizeN(s: string, _ms: Array<string>, mergeSuccessiveDelims:boolean = false): Array<TokenT> {
+function tokenizeN(s: string, _ms: Array<string>, caseSensitive: boolean=true, mergeSuccessiveDelims:boolean = false): Array<TokenT> {
     const ms: Array<string> = sortByLength(_ms).reverse();
     assert.isTrue( ( s!=null) && (s!=='') );
     assert.isTrue( (ms!=null) );
@@ -40,7 +40,10 @@ function tokenizeN(s: string, _ms: Array<string>, mergeSuccessiveDelims:boolean 
     for (let i = 0 ; i < s.length ; ) {
         let matched = false;
         for (let j = 0 ; j < ms.length ; j++) {
-            if (s.substring(i, i+ms[j].length)===ms[j]) {
+            if ( ( caseSensitive && (s.substring(i, i+ms[j].length)              ===ms[j]              )) ||
+                 (!caseSensitive && (s.substring(i, i+ms[j].length).toUpperCase()===ms[j].toUpperCase()))  )
+
+            {
                 if (token!=='') {
                     rv.push({v: token, isDelim: false});
                 }
