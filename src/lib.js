@@ -15,21 +15,20 @@ if (!global._babelPolyfill) // https://github.com/s-panferov/awesome-typescript-
 
 
 import {assert} from 'chai';
-import _        from 'lodash';
 
 
 export type TokenT =  {v: string, isDelim: boolean};
 
 
-function tokenize(s: string, m: string, caseSensitive: boolean=true): Array<TokenT> {
-    return tokenizeN(s, [m], caseSensitive);
+function tokenize1(s: string, m: string, caseSensitive: boolean=true): Array<TokenT> {
+    return tokenize(s, [m], caseSensitive);
 }
 
 function sortByLength(ss: Array<string>): Array<string> {
     return ss.slice().sort( (a,b)=>a.length-b.length );
 }
 
-function tokenizeN(s: string, _ms: Array<string>, caseSensitive: boolean=true, mergeSuccessiveDelims:boolean = false): Array<TokenT> {
+function tokenize(s: string, _ms: Array<string>, caseSensitive: boolean=true, mergeSuccessiveDelims:boolean = false): Array<TokenT> {
     const ms: Array<string> = sortByLength(_ms).reverse();
     assert.isTrue( ( s!=null) && (s!=='') );
     assert.isTrue( (ms!=null) );
@@ -66,13 +65,13 @@ function tokenizeN(s: string, _ms: Array<string>, caseSensitive: boolean=true, m
     return rv;
 }
 
-function nonDelimTokens(s: string, _ms: Array<string>): Array<string> {
-    const rv: Array<TokenT> = tokenizeN(s, _ms);
+function nonDelimTokens(s: string, _ms: Array<string>, caseSensitive: boolean = true): Array<string> {
+    const rv: Array<TokenT> = tokenize(s, _ms, caseSensitive);
     return rv.filter( ({isDelim})=>!isDelim ).map( ({v, isDelim})=>v );
 }
 
 exports.sortByLength   = sortByLength;
+exports.tokenize1      = tokenize1;
 exports.tokenize       = tokenize;
-exports.tokenizeN      = tokenizeN;
 exports.nonDelimTokens = nonDelimTokens;
 

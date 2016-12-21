@@ -12,13 +12,12 @@ if (!global._babelPolyfill) // https://github.com/s-panferov/awesome-typescript-
 //
 // ... will print 'undefined' without the the babel-polyfill being required.
 
-import {tokenize, tokenizeN, nonDelimTokens} from './lib.js';
+import {tokenize, nonDelimTokens} from './lib.js';
 
 import type {TokenT} from './lib.js';
 
 export type {TokenT};
 
-exports.tokenize = tokenize;
-exports.tokenizeN      = tokenizeN;
+exports.tokenize       = tokenize;
 exports.nonDelimTokens = nonDelimTokens;
 
