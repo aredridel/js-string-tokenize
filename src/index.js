@@ -14,6 +14,10 @@ if (!global._babelPolyfill) // https://github.com/s-panferov/awesome-typescript-
 
 import {tokenize, tokenizeN, nonDelimTokens} from './lib.js';
 
+import type {TokenT} from './lib.js';
+
+export type {TokenT};
+
 exports.tokenize = tokenize;
 exports.tokenizeN      = tokenizeN;
 exports.nonDelimTokens = nonDelimTokens;
