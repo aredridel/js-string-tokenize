@@ -21,8 +21,8 @@ import _        from 'lodash';
 export type TokenT =  {v: string, isDelim: boolean};
 
 
-function tokenize(s: string, m: string): Array<TokenT> {
-    return tokenizeN(s, [m]);
+function tokenize(s: string, m: string, caseSensitive: boolean=true): Array<TokenT> {
+    return tokenizeN(s, [m], caseSensitive);
 }
 
 function sortByLength(ss: Array<string>): Array<string> {
@@ -40,17 +40,16 @@ function tokenizeN(s: string, _ms: Array<string>, caseSensitive: boolean=true, m
     for (let i = 0 ; i < s.length ; ) {
         let matched = false;
         for (let j = 0 ; j < ms.length ; j++) {
-            if ( ( caseSensitive && (s.substring(i, i+ms[j].length)              ===ms[j]              )) ||
-                 (!caseSensitive && (s.substring(i, i+ms[j].length).toUpperCase()===ms[j].toUpperCase()))  )
-
-            {
+            const stringPart = s.substring(i, i+ms[j].length);
+            if ( ( caseSensitive && (stringPart              ===ms[j]              )) ||
+                 (!caseSensitive && (stringPart.toUpperCase()===ms[j].toUpperCase()))  ) {
                 if (token!=='') {
                     rv.push({v: token, isDelim: false});
                 }
                 if ( (rv.length>0) && rv[rv.length-1].isDelim && mergeSuccessiveDelims ) {
                     rv[rv.length-1].v += ms[j];
                 } else
-                    rv.push({v: ms[j], isDelim: true});
+                    rv.push({v: stringPart, isDelim: true});
                 token = '';
                 i += ms[j].length;
                 matched  = true;

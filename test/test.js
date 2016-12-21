@@ -155,5 +155,16 @@ describe('tokenize', function() {
                 }                        
             }
         });                
-    });            
+    });
+    describe('case insensitive', function() {
+        it('case 1', function() {
+            const input = "MACDONALD";
+            assert.strictEqual(JSON.stringify(tokenize(input, 'cd', false)), '[{"v":"MA","isDelim":false},{"v":"CD","isDelim":true},{"v":"ONALD","isDelim":false}]');
+        });
+        it('case 2', function() {
+            const input = "MACDONALD";
+            assert.strictEqual(JSON.stringify(tokenizeN(input, ['a', 'cd'], false))
+                               ,  '[{"v":"M","isDelim":false},{"v":"A","isDelim":true},{"v":"CD","isDelim":true},{"v":"ON","isDelim":false},{"v":"A","isDelim":true},{"v":"LD","isDelim":false}]');
+        });        
+    });
 });
